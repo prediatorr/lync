@@ -4,9 +4,10 @@
 */
 
 require("dotenv").config();
-const { Pool, Client } = require("pg");
+const { Pool } = require("pg");
+const { connect } = require("../api/auth/auth");
 
-const client = new Client({
+const pool = new Pool({
     user: process.env.DB_USERNAME,
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
@@ -14,13 +15,17 @@ const client = new Client({
     port: process.env.DB_PORT,
 })
 
-client.connect()
-    .then(() => {
+const Connect = async () => {
+    try {
+        await pool.connect();
         console.log("Database Connection Successful!");
-    })
-    .catch((err) => {
+    } catch (err) {
         console.log("Database Connection Failed!");
         console.error(err);
-    });
+    }
+    
+}
+Connect();
 
-module.exports = client;
+
+module.exports = pool;
