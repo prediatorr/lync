@@ -1,1 +1,1 @@
-"# lync" 
+# Lync Studio
